@@ -264,11 +264,12 @@ hr {
 					<th width=5%>UOM</th>
 					<th align="right" width=7%>Qty</th>
 					<th align="right" width=10%>Rate</th>
+					<th align="center" width=10%>Disc</th>
 					<th align="right" width=4%>CGST</th>
 					<th align="right" width=4%>SGST</th>
 					<th align="right" width=4%>IGST</th>
 					<th align="right" width=10%>Value</th>
-					<th align="center" width=30%>Schedule</th>
+					<!-- <th align="center" width=30%>Schedule</th> -->
 				</tr>
 			</thead>
 			<tbody>
@@ -533,11 +534,12 @@ hr {
 					<th width=5%>UOM</th>
 					<th align="right" width=7%>Qty</th>
 					<th align="right" width=10%>Rate</th>
+					<th align="center" width=10%>Disc</th>
 					<th align="right" width=4%>CGST</th>
 					<th align="right" width=4%>SGST</th>
 					<th align="right" width=4%>IGST</th>
 					<th align="right" width=10%>Value</th>
-					<th align="center" width=30%>Schedule</th>
+					<!-- <th align="center" width=30%>Schedule</th> -->
 				</tr>
 			</thead>
 			<tbody>
@@ -560,7 +562,7 @@ hr {
 
 
 
-				<c:set var="total" value="${total+row.basicValue-row.discValue}" />
+				<c:set var="total" value="${total+row.basicValue}" />
 				<tr style="font-size: 13px;">
 					<td height="5px" style="max-height: 5px" align="center"
 						width="30px"><c:out value="${count.index+1}" /></td>
@@ -576,6 +578,9 @@ hr {
 					<td align="right" style="padding: 5px;"><fmt:formatNumber
 							type="number" maxFractionDigits="2" minFractionDigits="2"
 							value="${row.itemRate}" /></td>
+					<td align="right" style="padding: 5px;" width=10%><fmt:formatNumber
+							type="number" maxFractionDigits="2" minFractionDigits="2"
+							value="${row.discValue}" /> (${row.discPer}%)</td>
 
 					<c:choose>
 						<c:when test="${row.igst==0}">
@@ -606,15 +611,15 @@ hr {
 										value="${row.cgst+row.sgst+row.igst}" /> </td> --%>
 					<td align="right" style="padding: 5px;"><fmt:formatNumber
 							type="number" maxFractionDigits="2" minFractionDigits="2"
-							value="${row.basicValue-row.discValue}" /></td>
-					<td align="center" width=10%><c:out value=" ${row.schDate} " /></td>
+							value="${row.basicValue}" /></td>
+					<%-- <td align="center" width=10%><c:out value=" ${row.schDate} " /></td> --%>
 
 				</tr>
 
 				</c:forEach>
 
 				<tr style="font-size: 13px;">
-					<td colspan="9"><c:out value="Total " /></td>
+					<td colspan="11"><c:out value="Total " /></td>
 
 					<td align="right" style="padding: 5px;"><fmt:formatNumber
 							type="number" maxFractionDigits="2" minFractionDigits="2"
@@ -639,27 +644,29 @@ hr {
 
 								<td width="10%" valign="top"
 									style="font-weight: bold; margin: 0px;" align="left">
-									Total Value : <br> Pack. Value : <br> Insu. Value : <br>
-									Fret. Value : <br> Tax Value : <br> Other Charge : <br>
-									Total : <br>
+									Total Value : <br>Disc : <br> Pack. Value : <br>
+									Insu. Value : <br> Fret. Value : <br> Tax Value : <br>
+									Other Charge : <br> Total : <br>
 								</td>
 
 								<td width="10%" valign="top"
 									style="font-weight: bold; margin: 0px;" align="right"><fmt:formatNumber
 										type="number" maxFractionDigits="2" minFractionDigits="2"
-										value="${total}" /> <br> <fmt:formatNumber type="number"
-										maxFractionDigits="2" minFractionDigits="2"
-										value="${item.poPackVal}" /> <br> <fmt:formatNumber
-										type="number" maxFractionDigits="2" minFractionDigits="2"
-										value="${item.poInsuVal}" /> <br> <fmt:formatNumber
-										type="number" maxFractionDigits="2" minFractionDigits="2"
-										value="${item.poFrtVal}" /> <br> <fmt:formatNumber
+										value="${total}" /> <br>
+								<fmt:formatNumber type="number" maxFractionDigits="2"
+										minFractionDigits="2" value="${item.discValue}" /> <br>
+									<fmt:formatNumber type="number" maxFractionDigits="2"
+										minFractionDigits="2" value="${item.poPackVal}" /> <br>
+									<fmt:formatNumber type="number" maxFractionDigits="2"
+										minFractionDigits="2" value="${item.poInsuVal}" /> <br>
+									<fmt:formatNumber type="number" maxFractionDigits="2"
+										minFractionDigits="2" value="${item.poFrtVal}" /> <br> <fmt:formatNumber
 										type="number" maxFractionDigits="2" minFractionDigits="2"
 										value="${item.poTaxValue}" /> <br> <fmt:formatNumber
 										type="number" maxFractionDigits="2" minFractionDigits="2"
 										value="${item.otherChargeAfter}" /> <br> <fmt:formatNumber
 										type="number" maxFractionDigits="2" minFractionDigits="2"
-										value="${total+item.poPackVal+item.poInsuVal+item.poFrtVal+item.poTaxValue+item.otherChargeAfter}" />
+										value="${total-item.discValue+item.poPackVal+item.poInsuVal+item.poFrtVal+item.poTaxValue+item.otherChargeAfter}" />
 									<br></td>
 
 							</tr>

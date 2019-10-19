@@ -151,7 +151,17 @@ public class OpeningUtilityController {
 					 itemList.get(i).setItemOpRate(Rate);
 					 itemList.get(i).setDiscPer(disc);
 					 itemList.get(i).setDiscamt(discamt);
-					 itemList.get(i).setBasicValue(Qty*Rate);
+					 itemList.get(i).setBasicValue(Qty*Rate); 
+					 
+				 }
+				 poBasicValue = poBasicValue + itemList.get(i).getBasicValue();
+			 }
+			 
+			 PoHeader.setPoBasicValue(Float.parseFloat(df.format(poBasicValue)));
+			 
+			 for(int i=0; i<itemList.size() ; i++) {
+				  
+					  
 					 float divFactor = (itemList.get(i).getBasicValue() / PoHeader.getPoBasicValue()) * 100; 
 					 itemList.get(i).setPackValue(Float.parseFloat(df.format(divFactor * PoHeader.getPoPackVal() / 100))); 
 					 itemList.get(i).setInsu(Float.parseFloat(df.format(divFactor * PoHeader.getPoInsuVal() / 100))); 
@@ -166,15 +176,12 @@ public class OpeningUtilityController {
 								+ itemList.get(i).getFreightValue()
 								+ itemList.get(i).getTaxValue()
 								+ itemList.get(i).getOtherChargesAfter())));  
-				 }
 				 
-				 	poBasicValue = poBasicValue + itemList.get(i).getBasicValue();
 					discValue = discValue + itemList.get(i).getDiscamt();
 					taxValue=taxValue+itemList.get(i).getTaxValue();
 			 }
 			  
-				PoHeader.setDiscValue(Float.parseFloat(df.format(discValue)));
-				PoHeader.setPoBasicValue(Float.parseFloat(df.format(poBasicValue))); 
+				PoHeader.setDiscValue(Float.parseFloat(df.format(discValue))); 
 				PoHeader.setPoTaxValue(Float.parseFloat(df.format(taxValue)));
 
 		} catch (Exception e) {
@@ -247,6 +254,13 @@ public class OpeningUtilityController {
 			}
 
 			for(int i=0; i<itemList.size() ; i++) {
+				   
+					poBasicValue = poBasicValue + itemList.get(i).getBasicValue(); 
+			}
+			
+			PoHeader.setPoBasicValue(Float.parseFloat(df.format(poBasicValue))); 
+			
+			for(int i=0; i<itemList.size() ; i++) {
 				  
 					 float divFactor = (itemList.get(i).getBasicValue() / PoHeader.getPoBasicValue()) * 100; 
 					 itemList.get(i).setPackValue(Float.parseFloat(df.format(divFactor * PoHeader.getPoPackVal() / 100))); 
@@ -267,8 +281,7 @@ public class OpeningUtilityController {
 						discValue = discValue + itemList.get(i).getDiscamt();
 			 }
 
-			PoHeader.setDiscValue(Float.parseFloat(df.format(discValue)));
-			PoHeader.setPoBasicValue(Float.parseFloat(df.format(poBasicValue))); 
+			PoHeader.setDiscValue(Float.parseFloat(df.format(discValue))); 
 			PoHeader.setPoTaxValue(Float.parseFloat(df.format(taxValue)));
 			//System.out.println(PoHeader);
 
@@ -415,7 +428,7 @@ public class OpeningUtilityController {
 					int utility = Integer.parseInt(request.getParameter("indpomrn"));
 					if (utility > 1) {
 
-						int isState = 1;
+						int isState = 0;
 						int vendId = Integer.parseInt(request.getParameter("vendId"));
 						String packRemark = request.getParameter("packRemark");
 						String insuRemark = request.getParameter("insuRemark");
@@ -432,12 +445,16 @@ public class OpeningUtilityController {
 						System.out.println("map " + map);
 						SettingValue settingValue = rest.postForObject(Constants.url + "/getSettingValue", map,
 								SettingValue.class);
+						
+						map.add("vendId", vendId); 
+						ErrorMessage stateCodeRes = rest.postForObject(Constants.url + "/getStateCodeByVendId", map,
+								ErrorMessage.class);
 
-						/*
-						 * if(intendDetailList.get(0).getStateCode().equals(settingValue.getValue())) {
-						 * 
-						 * isState=1; }
-						 */
+						
+						  if(stateCodeRes.getMessage().equals(settingValue.getValue())) {
+						  
+						  isState=1; }
+						 
 
 						  
 						// ----------------------------Inv No---------------------------------

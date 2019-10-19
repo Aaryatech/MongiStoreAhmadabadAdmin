@@ -348,9 +348,7 @@ body {
 											pattern="[+-]?([0-9]*[.])?[0-9]+" name="poBasicValue"
 											id="poBasicValue" class="form-control" readonly>
 									</div>
-									<div class="col-md-2">
-										<!-- Disc Value -->
-									</div>
+									<div class="col-md-2">Disc Value</div>
 									<div class="col-md-2">
 										<input style="text-align: right; width: 150px" type="text"
 											value="${poHeader.discValue}" name="discValue" id="discValue"
@@ -535,8 +533,8 @@ body {
 
 										<c:choose>
 											<c:when test="${userInfo.id==1}">
-												<input type="button" class="btn btn-info"
-													value="Import Excel " onclick="exportExcel()">
+												<!-- <input type="button" class="btn btn-info"
+													value="Import Excel " onclick="exportExcel()"> -->
 											</c:when>
 										</c:choose>
 
@@ -956,7 +954,8 @@ body {
 												})
 
 								calculation();
-
+								document.getElementById("Rate" + detailNo)
+										.focus();
 							});
 
 		}
