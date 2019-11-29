@@ -805,6 +805,10 @@ body {
 			var disc = parseFloat($("#disc" + detailNo).val());
 			var discAmtEnter = parseFloat($("#discAmt" + detailNo).val());
 
+			if(isNaN(discAmtEnter)){
+				discAmtEnter=0;
+			}
+			 
 			var taxableAmt = (Qty * Rate);
 			var discamt = 0;
 			if (disc != 0) {
