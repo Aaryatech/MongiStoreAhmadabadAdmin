@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -88,9 +88,18 @@
 										<select name="grn_type" id="grn_type"
 											class="form-control chosen" placeholder="Grn Type"
 											onchange="getInvoiceNo()" data-rule-required="true">
-											<option value="-1">Select MRN Type</option>
+											<option value="-1">All</option>
 											<c:forEach items="${typeList}" var="typeList">
-												<option value="${typeList.typeId}">${typeList.typeName}</option>
+
+												<c:choose>
+													<c:when test="${typeList.typeId==grnType}">
+														<option value="${typeList.typeId}" selected>${typeList.typeName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${typeList.typeId}">${typeList.typeName}</option>
+													</c:otherwise>
+												</c:choose>
+
 											</c:forEach>
 										</select>
 									</div>
@@ -180,6 +189,7 @@
 													<th class="col-md-1">Bill No</th>
 													<th class="col-md-5">Vendor</th>
 													<th class="col-md-1">Type</th>
+													<th class="col-md-1" style="text-align: right;">AMT</th>
 													<th class="col-md-1">Action</th>
 												</tr>
 											</thead>
@@ -203,7 +213,9 @@
 														</c:forEach>
 
 														<td><c:out value="${mrnType}" /></td>
-
+														<td style="text-align: right;"><fmt:formatNumber
+																type="number" groupingUsed="false" value="${mrn.total}"
+																maxFractionDigits="2" minFractionDigits="2" /></td>
 														<td><a href="javascript:genPdf(${ mrn.mrnId});"
 															title="PDF"><i
 																class="glyphicon glyphicon glyphicon-file"></i></a>
@@ -303,7 +315,7 @@
 						tr[i].style.display = "";
 					} else if (td1.innerHTML.toUpperCase().indexOf(filter) > -1) {
 						tr[i].style.display = "";
-					}else if (td2.innerHTML.toUpperCase().indexOf(filter) > -1) {
+					} else if (td2.innerHTML.toUpperCase().indexOf(filter) > -1) {
 						tr[i].style.display = "";
 					} else {
 						tr[i].style.display = "none";
