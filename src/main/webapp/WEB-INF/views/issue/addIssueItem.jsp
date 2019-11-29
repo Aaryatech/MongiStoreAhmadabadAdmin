@@ -5,6 +5,35 @@
 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/assets/bootstrap-datepicker/css/datepicker.css" />
+<style>
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#overlay2 {
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(101, 113, 119, 0.5);
+	z-index: 2;
+	cursor: pointer;
+}
+
+#text2 {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 25px;
+	color: white;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+}
+</style>
 <body onload="disabledDate()">
 	<!-- <script>
 		 function disabledDate () {
@@ -102,7 +131,9 @@
 			</div>  -->
 		<br>
 		<!-- END Page Title -->
-
+		<div id="overlay2">
+			<div id="text2">Please Wait...</div>
+		</div>
 		<div class="row">
 			<div class="col-md-12">
 
@@ -436,13 +467,13 @@
 		function qtyValidation() {
 
 			var batchNo = document.getElementById("batchNo").value;
-
+			document.getElementById("overlay2").style.display = "block";
 			$.getJSON('${qtyValidationFromBatch}', {
 
 				batchNo : batchNo,
 				ajax : 'true'
 			}, function(data) {
-
+				document.getElementById("overlay2").style.display = "none";
 				document.getElementById("batchQty").value = data.remainingQty;
 			});
 		}
@@ -454,6 +485,9 @@
 			if (type == "" || type == null) {
 				alert("select Type ");
 			} else {
+
+				document.getElementById("overlay2").style.display = "block";
+
 				$
 						.getJSON(
 								'${getBatchByItemId}',
@@ -465,7 +499,7 @@
 									ajax : 'true'
 								},
 								function(data) {
-
+									document.getElementById("overlay2").style.display = "none";
 									var html = '<option value="">Select Batch </option>';
 
 									var len = data.length;
@@ -493,13 +527,14 @@
 		function getItemIdByGroupId() {
 
 			var grpId = document.getElementById("groupId").value;
-
+			document.getElementById("overlay2").style.display = "block";
 			$.getJSON('${getItemIdByCatIdInIssue}', {
 
 				grpId : grpId,
 				ajax : 'true'
 			}, function(data) {
 
+				document.getElementById("overlay2").style.display = "none";
 				var html = '<option value="">Select Item</option>';
 
 				var len = data.length;
@@ -629,8 +664,8 @@
 						})
 
 						document.getElementById("qty").value = "";
-						document.getElementById("groupId").value = "";
-						$('#groupId').trigger("chosen:updated");
+						/* document.getElementById("groupId").value = "";
+						$('#groupId').trigger("chosen:updated"); */
 						/* document.getElementById("deptId").value= ""; 
 						$('#deptId').trigger("chosen:updated"); */
 						document.getElementById("itemId").value = "";

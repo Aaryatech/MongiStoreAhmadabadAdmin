@@ -147,7 +147,8 @@ body {
 
 						<div class="box-content">
 							<form method="post" class="form-horizontal"
-								action="${pageContext.request.contextPath}/insertIndentPoMrn">
+								action="${pageContext.request.contextPath}/insertIndentPoMrn"
+								id="submitForm">
 
 								<div class="box-content">
 
@@ -631,6 +632,25 @@ body {
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/jquery-validation/dist/additional-methods.min.js"></script>
 	<script type="text/javascript">
+		$(function() {
+			$('#submitForm')
+					.submit(
+							function() {
+
+								var x = confirm("Do you really want to submit the Purchase Order ?");
+								if (x == true) {
+									$("input[type='submit']", this).val(
+											"Please Wait...").attr('disabled',
+											'disabled');
+									return true;
+								} else {
+
+									return false;
+								}
+
+							});
+		});
+
 		function insertIndent() {
 			//alert("inside Indent Insetr");
 			var form = document.getElementById("validation-form");
@@ -805,10 +825,10 @@ body {
 			var disc = parseFloat($("#disc" + detailNo).val());
 			var discAmtEnter = parseFloat($("#discAmt" + detailNo).val());
 
-			if(isNaN(discAmtEnter)){
-				discAmtEnter=0;
+			if (isNaN(discAmtEnter)) {
+				discAmtEnter = 0;
 			}
-			 
+
 			var taxableAmt = (Qty * Rate);
 			var discamt = 0;
 			if (disc != 0) {
@@ -945,7 +965,8 @@ body {
 																						+ '" name="discAmt'
 																						+ data.itemId
 																						+ '" value ="'
-																						+ (data.discamt).toFixed(2)
+																						+ (data.discamt)
+																								.toFixed(2)
 																						+ '" onchange="changeValues('
 																						+ data.itemId
 																						+ ')" pattern="[+-]?([0-9]*[.])?[0-9]+" required>'));
@@ -1505,7 +1526,8 @@ body {
 																						+ '" name="discAmt'
 																						+ data.itemId
 																						+ '" value ="'
-																						+ (data.discamt).toFixed(2)
+																						+ (data.discamt)
+																								.toFixed(2)
 																						+ '" onchange="changeValues('
 																						+ data.itemId
 																						+ ')" pattern="[+-]?([0-9]*[.])?[0-9]+" required>'));
