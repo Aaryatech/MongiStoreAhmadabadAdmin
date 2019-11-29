@@ -324,6 +324,7 @@ body {
 													<th class="col-md-1">Tax%</th>
 													<th class="col-md-1">Taxable Amt</th>
 													<th class="col-md-1">Disc%</th>
+													<th class="col-md-1">Disc RS</th>
 													<th class="col-md-1">Tax Amt</th>
 													<th class="col-md-1">Total Amt</th>
 													<th class="col-md-1">Action</th>
@@ -802,8 +803,16 @@ body {
 			var Qty = parseFloat($("#Qty" + detailNo).val());
 			var Rate = parseFloat($("#Rate" + detailNo).val());
 			var disc = parseFloat($("#disc" + detailNo).val());
+			var discAmtEnter = parseFloat($("#discAmt" + detailNo).val());
+
 			var taxableAmt = (Qty * Rate);
-			var discamt = parseFloat((disc / 100) * taxableAmt);
+			var discamt = 0;
+			if (disc != 0) {
+				discamt = parseFloat((disc / 100) * taxableAmt);
+			} else {
+				discamt = discAmtEnter;
+			}
+
 			var amt = taxableAmt - discamt;
 
 			var taxper = parseFloat($("#taxper" + detailNo).val());
@@ -920,6 +929,19 @@ body {
 																						+ data.itemId
 																						+ '" value ="'
 																						+ data.discPer
+																						+ '" onchange="changeValues('
+																						+ data.itemId
+																						+ ')" pattern="[+-]?([0-9]*[.])?[0-9]+" required>'));
+														tr
+																.append($(
+																		'<td class="col-md-1" ></td>')
+																		.html(
+																				'<input type=text    class=form-control id= "discAmt'
+																						+ data.itemId
+																						+ '" name="discAmt'
+																						+ data.itemId
+																						+ '" value ="'
+																						+ (data.discamt).toFixed(2)
 																						+ '" onchange="changeValues('
 																						+ data.itemId
 																						+ ')" pattern="[+-]?([0-9]*[.])?[0-9]+" required>'));
@@ -1470,6 +1492,19 @@ body {
 																						+ '" onchange="changeValues('
 																						+ data.itemId
 																						+ ')" pattern="[+-]?([0-9]*[.])?[0-9]+" required>'));
+														tr
+																.append($(
+																		'<td class="col-md-1" ></td>')
+																		.html(
+																				'<input type=text    class=form-control id= "discAmt'
+																						+ data.itemId
+																						+ '" name="discAmt'
+																						+ data.itemId
+																						+ '" value ="'
+																						+ (data.discamt).toFixed(2)
+																						+ '" onchange="changeValues('
+																						+ data.itemId
+																						+ ')" pattern="[+-]?([0-9]*[.])?[0-9]+" required>'));
 
 														tr
 																.append($(
@@ -1752,6 +1787,17 @@ body {
 																				'<input type=text    class=form-control id= "disc'
 																						+ data.itemId
 																						+ '" name="disc'
+																						+ data.itemId
+																						+ '" value ="0" onchange="changeValues('
+																						+ data.itemId
+																						+ ')" pattern="[+-]?([0-9]*[.])?[0-9]+" required>'));
+														tr
+																.append($(
+																		'<td class="col-md-1" ></td>')
+																		.html(
+																				'<input type=text    class=form-control id= "discAmt'
+																						+ data.itemId
+																						+ '" name="discAmt'
 																						+ data.itemId
 																						+ '" value ="0" onchange="changeValues('
 																						+ data.itemId
