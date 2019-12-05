@@ -8909,15 +8909,15 @@ public class ValuationReport {
 
 							if (uniqueCatIdList.get(c) == itemWiseReport.get(j).getCatId()) {
 
-								totOpe = totOpe + itemWiseReport.get(j).getOpStockValue();
-								totPur = totPur + itemWiseReport.get(j).getApprovedQtyValue();
-								totIssue = totIssue + itemWiseReport.get(j).getIssueQtyValue();
-								totDamage = totDamage + itemWiseReport.get(j).getDamageValue();
+								totOpe = totOpe + itemWiseReport.get(j).getOpLandingValue();
+								totPur = totPur + itemWiseReport.get(j).getApprovedLandingValue();
+								totIssue = totIssue + itemWiseReport.get(j).getIssueLandingValue();
+								totDamage = totDamage + itemWiseReport.get(j).getDamageLandingValue();
 
-								float closing = itemWiseReport.get(j).getOpStockValue()
-										+ itemWiseReport.get(j).getApprovedQtyValue()
-										- itemWiseReport.get(j).getIssueQtyValue()
-										- itemWiseReport.get(j).getDamageValue();
+								float closing = itemWiseReport.get(j).getOpLandingValue()
+										+ itemWiseReport.get(j).getApprovedLandingValue()
+										- itemWiseReport.get(j).getIssueLandingValue()
+										- itemWiseReport.get(j).getDamageLandingValue();
 
 								totClosing = totClosing + closing;
 
@@ -8925,11 +8925,31 @@ public class ValuationReport {
 
 						}
 
-						float opePer = (sumOpValue * 100) / totOpe;
-						float purPer = (sumAprvValue * 100) / totOpe;
-						float issuePer = (sumIssueValue * 100) / totOpe;
-						float damagePer = (sumDamageValue * 100) / totOpe;
-						float closePer = (sumClsValue * 100) / totOpe;
+						float opePer=0,purPer=0,issuePer=0,damagePer=0,closePer=0;
+						if(totOpe>0) {
+							opePer = (sumOpLandValue * 100) / totOpe;
+						}
+						
+						if(totPur>0) {
+							purPer = (sumAprvLandValue * 100) / totPur;
+						}
+						
+						if(totIssue>0) {
+							issuePer = (sumIssueLandValue * 100) / totIssue;
+						}
+						
+						if(totDamage>0) {
+							damagePer = (sumDamageLandValue * 100) / totDamage;
+						}
+						
+						if(totClosing>0) {
+							closePer = (sumClsLandValue * 100) / totClosing;
+						}
+						 
+//						float purPer = (sumAprvValue * 100) / totPur;
+//						float issuePer = (sumIssueValue * 100) / totIssue;
+//						float damagePer = (sumDamageValue * 100) / totDamage;
+//						float closePer = (sumClsValue * 100) / totClosing;
 
 						rowData.add("" + opePer);
 						rowData.add("" + purPer);
@@ -9927,11 +9947,34 @@ public class ValuationReport {
 
 									}
 
-									float opePer = (sumOpLandValue * 100) / totOpe;
-									float purPer = (sumAprvLandValue * 100) / totOpe;
-									float issuePer = (sumIssueLandValue * 100) / totOpe;
-									float damagePer = (sumDamageLandValue * 100) / totOpe;
-									float closePer = (sumClsLandValue * 100) / totOpe;
+//									float opePer = (sumOpLandValue * 100) / totOpe;
+//									float purPer = (sumAprvLandValue * 100) / totPur;
+//									float issuePer = (sumIssueLandValue * 100) / totIssue;
+//									float damagePer = (sumDamageLandValue * 100) / totDamage;
+//									float closePer = (sumClsLandValue * 100) / totClosing;
+									
+									
+									float opePer=0,purPer=0,issuePer=0,damagePer=0,closePer=0;
+									if(totOpe>0) {
+										opePer = (sumOpLandValue * 100) / totOpe;
+									}
+									
+									if(totPur>0) {
+										purPer = (sumAprvLandValue * 100) / totPur;
+									}
+									
+									if(totIssue>0) {
+										issuePer = (sumIssueLandValue * 100) / totIssue;
+									}
+									
+									if(totDamage>0) {
+										damagePer = (sumDamageLandValue * 100) / totDamage;
+									}
+									
+									if(totClosing>0) {
+										closePer = (sumClsLandValue * 100) / totClosing;
+									}
+									
 
 									hcell = new PdfPCell(new Phrase("" + String.format("%.2f", opePer), totalFont));
 									hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
