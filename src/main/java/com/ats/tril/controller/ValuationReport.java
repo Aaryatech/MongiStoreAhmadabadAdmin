@@ -10231,7 +10231,7 @@ public class ValuationReport {
 				document.add(heading1);
 
 				Paragraph headingDate = new Paragraph(
-						"Category Wise Stock Report , From Date: " + fromDate + "  To Date: " + toDate + "", f1);
+						"Sub Category Wise Stock Report , From Date: " + fromDate + "  To Date: " + toDate + "", f1);
 				headingDate.setAlignment(Element.ALIGN_CENTER);
 				document.add(headingDate);
 
