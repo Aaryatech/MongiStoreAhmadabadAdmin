@@ -9234,6 +9234,10 @@ public class ValuationReport {
 	public void itemwiseStockValuetionReportPDF(HttpServletRequest request, HttpServletResponse response)
 			throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
+		
+		
+		System.err.println("ITEM ------------ "+stockItemWiseListForPdf);
+		
 		try {
 			Document document = new Document(PageSize.A4.rotate(), 10f, 10f, 10f, 0f);
 			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
@@ -9573,8 +9577,8 @@ public class ValuationReport {
 												table.addCell(cell);
 
 												cell = new PdfPCell(new Phrase(
-														"" + df.format(
-																stockItemWiseListForPdf.get(k).getOpeningStock()),
+														"" + 
+																stockItemWiseListForPdf.get(k).getOpeningStock(),
 														headFont));
 												cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 												cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -9619,7 +9623,7 @@ public class ValuationReport {
 														+ stockItemWiseListForPdf.get(k).getOpLandingValue();
 
 												cell = new PdfPCell(new Phrase(
-														"" + df.format(stockItemWiseListForPdf.get(k).getApproveQty()),
+														"" + stockItemWiseListForPdf.get(k).getApproveQty(),
 														headFont));
 												cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 												cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -9661,9 +9665,12 @@ public class ValuationReport {
 
 												sumAprvLandValue = sumAprvLandValue
 														+ stockItemWiseListForPdf.get(k).getApprovedLandingValue();
+												
+												
+												
 
 												cell = new PdfPCell(new Phrase(
-														"" + df.format(stockItemWiseListForPdf.get(k).getIssueQty()),
+														"" + stockItemWiseListForPdf.get(k).getIssueQty(),
 														headFont));
 												cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 												cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -9706,7 +9713,7 @@ public class ValuationReport {
 														+ stockItemWiseListForPdf.get(k).getIssueLandingValue();
 
 												cell = new PdfPCell(new Phrase(
-														"" + df.format(stockItemWiseListForPdf.get(k).getDamageQty()),
+														"" + stockItemWiseListForPdf.get(k).getDamageQty(),
 														headFont));
 												cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 												cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -9766,7 +9773,7 @@ public class ValuationReport {
 														- stockItemWiseListForPdf.get(k).getIssueLandingValue()
 														- stockItemWiseListForPdf.get(k).getDamageLandingValue();
 
-												cell = new PdfPCell(new Phrase("" + df.format(closingQty), headFont));
+												cell = new PdfPCell(new Phrase("" +closingQty, headFont));
 												cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 												cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 												cell.setPaddingRight(2);
