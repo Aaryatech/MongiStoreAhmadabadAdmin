@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFDataFormat;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -88,7 +89,30 @@ public class ExportExcelController {
 	            XSSFCell cell = row.createCell(j);
 	            
 	           
-	            cell.setCellValue(exportToExcelList.get(rowIndex).getRowData().get(j));
+	            try 
+		        { 
+		            // checking valid integer using parseInt() method 
+		           int value=Integer.parseInt(exportToExcelList.get(rowIndex).getRowData().get(j)); 
+		            cell.setCellValue(value);
+		        }  
+		        catch (NumberFormatException e)  
+		        { 
+		        	 try
+		             { 
+		        		 XSSFCellStyle cellStyle = wb.createCellStyle();
+		        		 XSSFDataFormat xssfDataFormat = wb.createDataFormat(); 
+		                 // checking valid float using parseInt() method 
+		                double value=Double.parseDouble(exportToExcelList.get(rowIndex).getRowData().get(j)); 
+		                cellStyle.setDataFormat(xssfDataFormat.getFormat("#,##0.00"));
+		                cell.setCellStyle(cellStyle);
+		                cell.setCellValue(value);
+		             }  
+		             catch (NumberFormatException e1) 
+		             { 
+		            	 cell.setCellValue(exportToExcelList.get(rowIndex).getRowData().get(j));
+		             } 
+		               
+		        } 
 	           
 	             
 	      
