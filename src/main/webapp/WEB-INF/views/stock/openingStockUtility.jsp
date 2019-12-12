@@ -829,6 +829,10 @@ body {
 				discAmtEnter = 0;
 			}
 
+			if (isNaN(disc)) {
+				disc = 0;
+			}
+
 			var taxableAmt = (Qty * Rate);
 			var discamt = 0;
 			if (disc != 0) {
